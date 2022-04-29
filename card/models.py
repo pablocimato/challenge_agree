@@ -8,7 +8,7 @@ class User(Base):
      name = Column(String(20), unique=True)
      password = Column(String(100))
      
-     creator = relationship("Card", back_populates="cards")
+ #    creator = relationship("Card", back_populates="cards")
 
 class Card(Base):
      __tablename__ = "cards_table"
@@ -23,9 +23,9 @@ class Card(Base):
      description = Column(String(100))
      price = Column(Integer)
      cardimage = Column(String(20))
-     user_id = Column(String(20), ForeignKey('users_table.name'))
+#     user_id = Column(String(20), ForeignKey('users_table.name'))
 
-     cards = relationship("User", back_populates="creator")
+#     cards = relationship("User", back_populates="creator")
 
 
     

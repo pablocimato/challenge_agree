@@ -7,17 +7,12 @@ from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/card", tags=['Cards'])
 
-
-@router.post('/uploadfile/', status_code=status.HTTP_201_CREATED)
-async def create_upload_file(Cards: schemas.Card, file: UploadFile = File(...)):
-    return {"filename": file.filename, 'Cards': Cards.id}
-
 @router.post('/', status_code=status.HTTP_201_CREATED)
 def create(request: schemas.Card,db: Session = Depends(database.get_db), current_user: schemas.User = Depends(ouath2.get_current_user)):
     new_card = models.Card(id=request.id,name=request.name,edition=request.edition,
                             types=request.types,subtypes=request.subtypes,
                             atk=request.atk,defe=request.defe,stars=request.stars,
-                            description=request.description,price=request.price,user_id="pablo")
+                            description=request.description,price=request.price,cardimage=request.cardimage)
 
     db.add(new_card)
     db.commit()
