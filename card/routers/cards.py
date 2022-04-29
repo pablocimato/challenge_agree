@@ -25,15 +25,14 @@ def destroy(id,db: Session = Depends(database.get_db),current_user: schemas.User
     if not card.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
          detail= f"Card with the id {id} is not available")
-
     card.delete(synchronize_session=False)
     db.commit()
-    return 'done'
+    return 'deleted'
 
 @router.put ('/{id}', status_code=status.HTTP_202_ACCEPTED)
 def update(id, request: schemas.Card, db: Session= Depends(database.get_db),current_user: schemas.User = Depends(ouath2.get_current_user)):
-    card = db.query(models.Card).filter(models.Card.id == id)
-    if not blog.first():
+    card=db.query(models.Card).filter(models.Card.id == id)
+    if not card.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f"Blog with id {id} not found")
     card.update(request)
     db.commit()
