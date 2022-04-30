@@ -20,7 +20,7 @@ def create(request: schemas.Card,db: Session = Depends(database.get_db), current
     return new_card
 
 @router.delete('/{id}',status_code=status.HTTP_204_NO_CONTENT)
-def destroy(id,db: Session = Depends(database.get_db),current_user: schemas.User = Depends(ouath2.get_current_user)):
+def delete(id,db: Session = Depends(database.get_db),current_user: schemas.User = Depends(ouath2.get_current_user)):
     card=db.query(models.Card).filter(models.Card.id == id)
     if not card.first():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
